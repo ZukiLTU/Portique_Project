@@ -1,1 +1,4 @@
 #CONFIGURATION DRONE
+user: ""
+password: ""
+api_id: ""
