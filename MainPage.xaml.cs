@@ -59,7 +59,7 @@ namespace DJIDrone
                 },
             },
             new SDKModuleSampleItems() {
-                header = "Vidéo (OFF)", items = new List<KeyValuePair<String, Type>>()
+                header = "Vidéo", items = new List<KeyValuePair<String, Type>>()
                 {
                     new KeyValuePair<string, Type>("Vidéo du drone", typeof(FPV.PageVideoDrone)),
                 },
@@ -71,9 +71,9 @@ namespace DJIDrone
                 },
             },
             new SDKModuleSampleItems() {
-                header = "Points de passage (Hardy)", items = new List<KeyValuePair<String, Type>>()
+                header = "Points de passage", items = new List<KeyValuePair<String, Type>>()
                 {
-                    new KeyValuePair<string, Type>("Utilisation du simulateur (?)", typeof(WaypointHandling.PageSimulateur)),
+                    new KeyValuePair<string, Type>("Utilisation du simulateur", typeof(WaypointHandling.PageSimulateur)),
                     new KeyValuePair<string, Type>("Mission de points de passage", typeof(WaypointHandling.PagePoints)),
                 },
             },
@@ -89,12 +89,12 @@ namespace DJIDrone
                     new KeyValuePair<string, Type>("Zones de vol", typeof(Vol.PageVol)),
                 },
             },
-            /*new SDKModuleSampleItems() {
+            new SDKModuleSampleItems() {
                 header = "Playback", items = new List<KeyValuePair<String, Type>>()
                 {
                     new KeyValuePair<string, Type>("Playback", typeof(Playback.PPage)),
                 },
-            },*/
+            },
 
         };
 
