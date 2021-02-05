@@ -25,23 +25,3 @@ This application is meant to be used with `Mavic Air` drone, there will be incom
 ## Configuration (config.yml)
 `api_key :` API Key from DJI Developer (https://developer.dji.com/)<br/>
 `map_key :` API Key from Bing Map Developer required (https://www.bingmapsportal.com/)
-
-
-
-
-
-
-
-
-
-<style>
-    .rem{
-        background: darkred;
-        color: white;
-        padding: 15px;
-        border-radius:50px;
-        -moz-border-radius:50px;
-        -webkit-border-radius:50px;
-        border: 3px solid GRAY;
-    }
-</style>
