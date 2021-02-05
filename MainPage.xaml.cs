@@ -6,10 +6,6 @@
   ██     ▄██    ██   ██   ██     ▄██ ██     ██     ██ ██    ██  ██▀▀▀▀▀▀
   ██    ▄██▀██  ██   ██   ██    ▄██▀ ██     ██▄   ▄██ ██    ██  ██▄    ▄
 ▄████████▀  █████  ▄████▄████████▀ ▄████▄    ▀█████▀▄████  ████▄ ▀█████▀     
-
-Fait par JANUSAUSKAS Tadas, AITOURAB Mehdi et Massengo Riche Hardy en classe de BTS SN2.
-
-Ce fichier est le fichier principal d'exécution du projet.
  */
 
 using System;
