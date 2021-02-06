@@ -11,8 +11,8 @@ Class project (2021)
 
 <div class="rem">
 <!--<img src = "" alt="">-->
-This application is meant to be used with `Mavic Air` drone, there will be incompatibilties with other drones.
-<br/>Also, **DO NOT** use non-Mavic drones, it won't work at all.
+This application is meant to be used with Mavic Air drone, there will be incompatibilties with other drones.
+<br/>Also, DO NOT use non-Mavic drones, it won't work at all.
 </div>
 
 
