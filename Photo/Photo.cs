@@ -60,7 +60,28 @@ namespace DJIDrone.VideoDrone
                 var retCode = await DJISDKManager.Instance.ComponentManager.GetCameraHandler(0, 0).SetCameraWorkModeAsync(workMode);
                 if (retCode != SDKError.NO_ERROR)
                 {
-                    lblMode.Text = "Mode : " + mode.ToString() + "échoué." + "("+retCode.ToString()+")";
+                    switch (mode)
+                    {
+                        case CameraWorkMode.SHOOT_PHOTO:
+                            string _pmode = "prise photo";
+                            lblMode.Text = "Mode" + _pmode.ToString() + " échoué." + "(" + retCode.ToString() + ")";
+                            break;
+                        case CameraWorkMode.RECORD_VIDEO:
+                            string _vmode = "enregistrement vidéo";
+                            lblMode.Text = "Mode" + _vmode.ToString() + "échoué." + "(" + retCode.ToString() + ")";
+                            break;
+                        case CameraWorkMode.MEDIA_DOWNLOAD:
+                            string _dlmode = "téléchargement";
+                            lblMode.Text = "Mode" + _dlmode.ToString() + "échoué." + "(" + retCode.ToString() + ")";
+                            break;
+                        case CameraWorkMode.BROADCAST:
+                            string _bcmode = "diffusion";
+                            lblMode.Text = "Mode" + _bcmode.ToString() + "échoué." + "(" + retCode.ToString() + ")";
+                            break;
+                        default:
+                            lblMode.Text = "Mode inconnu.";
+                            break;
+                    } 
                 }
             }
             else
