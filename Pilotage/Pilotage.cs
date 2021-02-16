@@ -61,10 +61,10 @@ namespace DJIDrone.VideoDrone
         }
         public class Boutons
         {
-            ushort btnPhoto = 1;
-            ushort btnVideo = 2;
-            ushort btnDecollage = 12;
-            ushort btnReturnHome = 11;
+            short btnPhoto = 1;
+            short btnVideo = 2;
+            short btnDecollage = 12;
+            short btnReturnHome = 11;
 
             public void Photo()
             {
