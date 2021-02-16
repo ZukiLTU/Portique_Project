@@ -1,4 +1,4 @@
-# Portique_Project
+# Drone_Project
 Class project (2021)
 
 ![](https://img.shields.io/github/issues/ZukiLTU/Portique_Project)
