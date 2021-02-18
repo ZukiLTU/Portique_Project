@@ -1,8 +1,11 @@
 ﻿using DJI.WindowsSDK;
 using System;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Security.Cryptography.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -30,20 +33,38 @@ namespace DJIDrone.DJISDKInitializing
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
                 activateStateTextBlock.Text = state == SDKRegistrationState.Succeeded ? "Activé." : "Inactif.";
-                activationInformation.Text = resultCode == SDKError.NO_ERROR ? "Enregistré avec succès :" : resultCode.ToString();
+                activationInformation.Text = resultCode == SDKError.NO_ERROR ? "Enregistré avec succès." : resultCode.ToString();
             });
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+         
+        private void StackPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            string path = "config.yml";
-            //using (var reader = new StreamReader(path))
-            //{
-               // var yml = new YamlStream();
-                //yml.Load(reader);
-                DJISDKManager.Instance.RegisterApp(activatingCodeTextBox.Text);
-                activationInformation.Text = "Enregistrement...";
-            //
+            async void GetYML(string chemin) 
+            {
+                try
+                {
+                    using (var reader = new StreamReader(chemin))
+                    {
+                        var yml = new YamlStream();
+                        yml.Load(reader);
+
+                        var mapping = (YamlMappingNode)yml.Documents[0].RootNode;
+                        var items = mapping.Children[new YamlScalarNode("api_key")];
+                        lblCode.Text = items.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageDialog message = new MessageDialog(ex.Message);
+                    await message.ShowAsync();
+                }
+                finally
+                {
+                    DJISDKManager.Instance.RegisterApp(lblCode.Text);
+                    activationInformation.Text = "Enregistrement...";
+                }
+            }
+            GetYML(AppDomain.CurrentDomain.BaseDirectory + "config.yml");       
         }
     }
 }
