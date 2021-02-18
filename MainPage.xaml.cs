@@ -92,13 +92,6 @@ namespace DJIDrone
                     new KeyValuePair<string, Type>("Zones de vol", typeof(Vol.PageVol)),
                 },
             },
-            new SDKModuleSampleItems() {
-                header = "Playback", items = new List<KeyValuePair<String, Type>>()
-                {
-                    new KeyValuePair<string, Type>("Playback", typeof(Playback.PPage)),
-                },
-            },
-
         };
 
         /// <summary>
