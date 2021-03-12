@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using DJIVideoParser;
 using DJI.WindowsSDK.Components;
+using Windows.UI.Popups;
 
 namespace DJIDrone.VideoDrone
 {
@@ -39,16 +40,6 @@ namespace DJIDrone.VideoDrone
             };
         }
 
-        private void SetCameraWorkModeToShootPhoto_Click(object sender, RoutedEventArgs e)
-        {
-            SetCameraWorkMode(CameraWorkMode.SHOOT_PHOTO);
-        }
-
-        private void SetCameraModeToRecord_Click(object sender, RoutedEventArgs e)
-        {
-            SetCameraWorkMode(CameraWorkMode.RECORD_VIDEO);
-        }
-
         private async void SetCameraWorkMode(CameraWorkMode mode)
         {
             if (DJISDKManager.Instance.ComponentManager != null)
@@ -60,28 +51,12 @@ namespace DJIDrone.VideoDrone
                 var retCode = await DJISDKManager.Instance.ComponentManager.GetCameraHandler(0, 0).SetCameraWorkModeAsync(workMode);
                 if (retCode != SDKError.NO_ERROR)
                 {
-                    switch (mode)
-                    {
-                        case CameraWorkMode.SHOOT_PHOTO:
-                            string _pmode = "prise photo";
-                            lblMode.Text = "Mode" + _pmode.ToString() + " échoué." + "(" + retCode.ToString() + ")";
-                            break;
-                        case CameraWorkMode.RECORD_VIDEO:
-                            string _vmode = "enregistrement vidéo";
-                            lblMode.Text = "Mode" + _vmode.ToString() + "échoué." + "(" + retCode.ToString() + ")";
-                            break;
-                        case CameraWorkMode.MEDIA_DOWNLOAD:
-                            string _dlmode = "téléchargement";
-                            lblMode.Text = "Mode" + _dlmode.ToString() + "échoué." + "(" + retCode.ToString() + ")";
-                            break;
-                        case CameraWorkMode.BROADCAST:
-                            string _bcmode = "diffusion";
-                            lblMode.Text = "Mode" + _bcmode.ToString() + "échoué." + "(" + retCode.ToString() + ")";
-                            break;
-                        default:
-                            lblMode.Text = "Mode inconnu.";
-                            break;
-                    } 
+                             
+                }
+                else
+                {
+                    /*MessageDialog messageDialog = new MessageDialog("Erreur au niveau du SDK." + retCode.ToString());
+                    await messageDialog.ShowAsync();*/
                 }
             }
             else
@@ -89,6 +64,89 @@ namespace DJIDrone.VideoDrone
                 //non enregistré
                 Console.WriteLine("Licence non enregistrée.");
             }
+        }
+        private async void btnPrendrePhoto_Click(object sender, RoutedEventArgs e)
+        {
+            if (DJISDKManager.Instance.ComponentManager != null)
+            {
+                var retCode = await DJISDKManager.Instance.ComponentManager.GetCameraHandler(0, 0).StartShootPhotoAsync();
+                if (retCode != SDKError.NO_ERROR)
+                {
+                    lblMsg.Text = "Echec de prise de photo : " + retCode.ToString();
+                }
+                else
+                {
+                    lblMsg.Text = "Photographié avec succès.";
+                }
+            }
+            else
+            {
+                Console.WriteLine("L'application n'est pas enregistrée !");
+            }
+        }
+
+        private async void btnDebutEnreg_Click(object sender, RoutedEventArgs e)
+        {
+            if (DJISDKManager.Instance.ComponentManager != null)
+            {
+                var retCode = await DJISDKManager.Instance.ComponentManager.GetCameraHandler(0, 0).StartRecordAsync();
+                if (retCode != SDKError.NO_ERROR)
+                {
+                    lblMsg.Text = "Ne peut pas enregistrer la vidéo : " + retCode.ToString();
+                }
+                else
+                {
+                    lblMsg.Text = "Enregistrement : ";
+                    DJISDKManager.Instance.ComponentManager.GetCameraHandler(0, 0).RecordingTimeChanged += async delegate (object _sender, IntMsg? value)
+                    {
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                        {
+                            if (value != null)
+                            {
+                                lblMsg.Text += value.Value.value.ToString();
+                            }
+                        });
+                    };
+                }
+            }
+            else
+            {
+                lblMsg.Text = "L'application n'est pas enregistrée";
+            }
+        }
+
+        private async void btnFinEnreg_Click(object sender, RoutedEventArgs e)
+        {
+            if (DJISDKManager.Instance.ComponentManager != null)
+            {
+                var retCode = await DJISDKManager.Instance.ComponentManager.GetCameraHandler(0, 0).StopRecordAsync();
+                if (retCode != SDKError.NO_ERROR)
+                {
+                    lblMsg.Text = "Ne peut arrêter la vidéo  " + retCode.ToString();
+                }
+                else
+                {
+                    lblMsg.Text = "Fin de l'enregistrement";
+                }
+            }
+            else
+            {
+                lblMsg.Text = "L'application n'est pas enregistrée.";
+            }
+        }
+
+        private void btnmodePhoto_Click(object sender, RoutedEventArgs e)
+        {
+            SetCameraWorkMode(CameraWorkMode.SHOOT_PHOTO);
+            lblMode.Text = "Mode photo.";
+            lblMsg.Text = "";
+        }
+
+        private void btnmodeVideo_Click(object sender, RoutedEventArgs e)
+        {
+            SetCameraWorkMode(CameraWorkMode.RECORD_VIDEO);
+            lblMode.Text = "Mode vidéo.";
+            lblMsg.Text = "";
         }
     }
 }
